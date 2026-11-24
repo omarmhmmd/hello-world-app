@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hello World</title>
+
+<!-- Fixed iPhone-size app; fills the screen on phones -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F4F6FB">
+
+<!-- Add to Home Screen, open full screen -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Hello">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* ---- Page: plain white, app centered (desktop) ---- */
+  body {
+    background: #FFFFFF;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---- App: exactly 390 x 844 ---- */
+  .app {
+    flex: none;
+    width: 390px;
+    height: 844px;
+    display: flex;
+    flex-direction: column;
+    padding: 64px 24px 32px 24px;
+    background: #F4F6FB;
+    color: #0F1B33;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+  }
+
+  /* ---- Phones: fill the whole screen ---- */
+  @media (max-width: 430px) {
+    body { display: block; }
+    .app {
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      padding-top: max(64px, calc(env(safe-area-inset-top) + 16px));
+      padding-bottom: max(32px, calc(env(safe-area-inset-bottom) + 16px));
+      padding-left: max(24px, env(safe-area-inset-left));
+      padding-right: max(24px, env(safe-area-inset-right));
+    }
+  }
+
+  /* ---- App contents ---- */
+  .bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .wordmark {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+  }
+  .count {
+    font-size: 14px;
+    font-weight: 500;
+    color: #4A5675;
+  }
+
+  .main {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  .rings {
+    flex: none;
+    width: 220px;
+    height: 220px;
+    border-radius: 110px;
+    background: #2F5BFF;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rings > div {
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ring-1 { width: 220px; height: 220px; background: #F4F6FB; opacity: 0.82; }
+  .ring-2 { width: 150px; height: 150px; background: #2F5BFF; opacity: 0.35; }
+  .ring-3 { width: 96px;  height: 96px;  background: #2F5BFF; }
+
+  .copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+  .lang {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #3A4666;
+    background: #FFFFFF;
+    border-radius: 999px;
+    padding: 6px 14px;
+  }
+  h1 {
+    margin: 0;
+    min-height: 116px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', 'Hiragino Sans', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .copy p {
+    margin: 0;
+    max-width: 280px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #4A5675;
+  }
+
+  button {
+    flex: none;
+    width: 100%;
+    height: 56px;
+    border: 0;
+    border-radius: 16px;
+    background: #2F5BFF;
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:active { opacity: 0.85; }
+  button:focus-visible { outline: 3px solid #0F1B33; outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<main class="app">
+  <div class="bar">
+    <span class="wordmark">hello</span>
+    <span class="count" id="count">No taps yet</span>
+  </div>
+
+  <div class="main">
+    <div class="rings">
+      <div class="ring-1"></div>
+      <div class="ring-2"></div>
+      <div class="ring-3">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-4 3.5V17H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"></path><path d="M8 10h8M8 13h5"></path></svg>
+      </div>
+    </div>
+
+    <div class="copy">
+      <span class="lang" id="lang">English</span>
+      <h1 id="greeting" aria-live="polite">Hello, World!</h1>
+      <p>Your first mobile app is up and running. Tap the button to say it another way.</p>
+    </div>
+  </div>
+
+  <button type="button" id="next">Say hello again</button>
+</main>
+
+<script>
+  (function () {
+    var list = [
+      { lang: 'English',  text: 'Hello, World!' },
+      { lang: 'Español',  text: 'Hola, Mundo!' },
+      { lang: 'Français', text: 'Bonjour, le monde!' },
+      { lang: 'Deutsch',  text: 'Hallo, Welt!' },
+      { lang: 'Italiano', text: 'Ciao, mondo!' },
+      { lang: '日本語',    text: 'こんにちは、世界!' }
+    ];
+    var idx = 0, taps = 0;
+    var elGreeting = document.getElementById('greeting');
+    var elLang = document.getElementById('lang');
+    var elCount = document.getElementById('count');
+
+    document.getElementById('next').addEventListener('click', function () {
+      idx = (idx + 1) % list.length;
+      taps += 1;
+      elGreeting.textContent = list[idx].text;
+      elLang.textContent = list[idx].lang;
+      elCount.textContent = taps === 1 ? '1 hello' : taps + ' hellos';
+    });
+  })();
+</script>
+</body>
+</html>
